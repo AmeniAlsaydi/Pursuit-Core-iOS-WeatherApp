@@ -10,11 +10,6 @@ import UIKit
 
 class ForcastCell: UICollectionViewCell {
     
-    // create variables
-    // configure cell
-    // constrain
-    
-    
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.text = "Date Goes here"
@@ -124,24 +119,4 @@ class ForcastCell: UICollectionViewCell {
 }
 
 
-extension Double {
-    func convertToDate(dateFormat: String) -> String {
-        let date = Date(timeIntervalSince1970: self)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = dateFormat
-        dateFormatter.timeZone = .current
-        let localDate = dateFormatter.string(from: date)
-        return localDate
-    }
-    
-    func convertTime() -> String {
-        let date = Date(timeIntervalSince1970: self)
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = DateFormatter.Style.medium
-        dateFormatter.dateFormat = "h:mm a"
-        dateFormatter.timeZone = .current
-        let localDate = dateFormatter.string(from: date)
-        return localDate
-    }
-    
-}
+

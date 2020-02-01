@@ -10,9 +10,9 @@ import UIKit
 
 class ForcastView: UIView {
     
-    override func layoutSubviews() {
-        cityImage.layer.cornerRadius = cityImage.frame.width/2
-    }
+//    override func layoutSubviews() {
+//        cityImage.layer.cornerRadius = cityImage.frame.width/2
+//    }
     
     public lazy var collectionView: UICollectionView = {
         // lazy, we want to instantiate it when its called
@@ -22,6 +22,26 @@ class ForcastView: UIView {
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout) // like creating an empty variable
         cv.backgroundColor = .white
         return cv
+    }()
+    
+    public lazy var todayLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 25, weight: UIFont.Weight.light)
+        label.text = "Today"
+        return label
+       }()
+    
+    public lazy var summaryLabel: UILabel = {
+         let label = UILabel()
+         label.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.thin)
+         label.text = "Summary goes here"
+         return label
+    }()
+    
+    public lazy var currentTempLabel: UILabel = {
+       let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 100, weight: UIFont.Weight.ultraLight)
+        return label
     }()
     
     public lazy var cityLabel: UILabel = {
@@ -40,15 +60,6 @@ class ForcastView: UIView {
         return textfeild
     }()
     
-    public lazy var cityImage: UIImageView = {
-        let image = UIImageView()
-        image.contentMode = .scaleAspectFill
-        image.clipsToBounds = true
-       
-        image.image = UIImage(systemName: "cloud.sun")
-        return image
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         commonInit()
@@ -63,8 +74,9 @@ class ForcastView: UIView {
         setUpCityLabelConstraits()
         setupCollectionViewConstraints()
         setUpTextFeildConstraints()
-        setUpcityImageConstraints()
-        
+        setuptodayLabelConstraints()
+        setupSumarrayConstraints()
+        setUpCurrentLablConstraints()
     }
     
     
@@ -76,7 +88,6 @@ class ForcastView: UIView {
             cityLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
             cityLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             cityLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
-            
         ])
         
     }
@@ -90,7 +101,6 @@ class ForcastView: UIView {
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.25)
-                                             
         ])
     }
     
@@ -103,25 +113,38 @@ class ForcastView: UIView {
             zipCodeTextFeild.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 5),
             zipCodeTextFeild.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
             zipCodeTextFeild.centerXAnchor.constraint(equalTo: centerXAnchor)
-        
         ])
     }
     
-    private func setUpcityImageConstraints() {
-        addSubview(cityImage)
-        cityImage.translatesAutoresizingMaskIntoConstraints = false
+    private func setuptodayLabelConstraints() {
+        addSubview(todayLabel)
+        todayLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            cityImage.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            //cityImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            //cityImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            cityImage.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.75),
-            cityImage.heightAnchor.constraint(equalTo: cityImage.widthAnchor),
-            cityImage.centerXAnchor.constraint(equalTo: centerXAnchor)
+            todayLabel.topAnchor.constraint(equalTo: zipCodeTextFeild.bottomAnchor, constant: 30),
+            todayLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            todayLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
-        
-        // TODO: Fix image constraints
-        
     }
     
+    private func setupSumarrayConstraints() {
+        addSubview(summaryLabel)
+        summaryLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            summaryLabel.topAnchor.constraint(equalTo: todayLabel.bottomAnchor, constant: 20),
+            summaryLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            summaryLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+        ])
+    }
+    
+    public func setUpCurrentLablConstraints() {
+        addSubview(currentTempLabel)
+        currentTempLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+        currentTempLabel.topAnchor.constraint(equalTo: summaryLabel.bottomAnchor, constant: 20),
+        currentTempLabel.centerXAnchor.constraint(equalTo: centerXAnchor)])
+        
+    }
 }

@@ -13,11 +13,26 @@ struct Weather : Codable {
     var longitude: Double
     let timezone: String
     let daily: Daily
+    let hourly: Hourly
 }
 struct Daily: Codable {
     let summary: String
     let data: [DailyForecast]
 }
+
+struct Hourly: Codable {
+    let summary: String
+    let data: [HourlyForcast]
+    
+}
+
+struct HourlyForcast: Codable {
+    let summary: String
+    let temperature: Double
+    let icon: String
+}
+
+
 struct DailyForecast: Codable {
     let summary: String?
     let time: Int

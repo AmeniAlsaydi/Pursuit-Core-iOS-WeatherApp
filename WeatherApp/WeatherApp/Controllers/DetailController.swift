@@ -56,13 +56,16 @@ class DetailController: UIViewController {
         sunsetLabel.text = Double(weather.sunsetTime).convertTime()
         sunriseLabel.text = Double(weather.sunriseTime).convertTime()
         
-        cityImageView.getImage(with: photo!.largeImageURL) { [weak self] (result) in
+        guard let photo = photo else {
+            DispatchQueue.main.async {
+                self.cityImageView.image = UIImage(named: "world")
+            }
+            return
+        }
+        
+        cityImageView.getImage(with: photo.largeImageURL) { [weak self] (result) in
             switch result {
             case .failure(let appError):
-                DispatchQueue.main.async {
-                    self?.cityImageView.image = UIImage(named: "world")
-                }
-                // show default
                 print(appError)
             case .success(let image):
                 DispatchQueue.main.async {

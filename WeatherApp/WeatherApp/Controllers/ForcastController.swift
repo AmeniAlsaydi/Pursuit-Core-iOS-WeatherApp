@@ -8,7 +8,6 @@
 
 import UIKit
 import MapKit
-//import ImageKit
 
 class ForcastController: UIViewController {
     
@@ -84,10 +83,11 @@ class ForcastController: UIViewController {
                     
                     DispatchQueue.main.async {
                         self?.forcastView.cityLabel.text = city + ", " + country
+                        self?.forcastView.summaryLabel.text = weather.hourly.data[0].summary
+                        let currentTemp = String(format: "%.0f", weather.hourly.data[0].temperature)
+                        self?.forcastView.currentTempLabel.text = "\(currentTemp)°F"
                     }
                     self?.getCityPhotos(city: city)
-                    
-                    
                 }
             }
         }
@@ -157,13 +157,16 @@ extension ForcastController: UICollectionViewDelegateFlowLayout {
             fatalError("could not downcast to DetailController")
         }
         
+        // If no photos are returned
+        if  cityPhotos.count != 0 {
+            detailVC.photo = cityPhotos[indexPath.row]
+        }
+        
         detailVC.weather = weeksForcast[indexPath.row]
-        detailVC.photo = cityPhotos[indexPath.row]
         detailVC.cityName = cityName 
         
         navigationController?.pushViewController(detailVC, animated: true)
     }
-    
 }
 
 extension ForcastController: UITextFieldDelegate {
@@ -180,12 +183,5 @@ extension ForcastController: UITextFieldDelegate {
     }
 }
 
-
-
-extension CLLocation {
-    func fetchCityAndCountry(completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
-        CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first?.locality, $0?.first?.country, $1) }
-    }
-}
 
 

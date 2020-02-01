@@ -27,6 +27,8 @@
 		B7BE4CD523E5B1520069E141 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE4CD423E5B1520069E141 /* Photo.swift */; };
 		B7BE4CDB23E5CC8C0069E141 /* WeatherDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7BE4CDA23E5CC8B0069E141 /* WeatherDetail.storyboard */; };
 		B7BE4CDD23E5CCC10069E141 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE4CDC23E5CCC10069E141 /* DetailController.swift */; };
+		B7BE4CDF23E5E7210069E141 /* DoubleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE4CDE23E5E7210069E141 /* DoubleExt.swift */; };
+		B7BE4CE123E5E7840069E141 /* LocationExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE4CE023E5E7840069E141 /* LocationExt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		B7BE4CD423E5B1520069E141 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		B7BE4CDA23E5CC8B0069E141 /* WeatherDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WeatherDetail.storyboard; sourceTree = "<group>"; };
 		B7BE4CDC23E5CCC10069E141 /* DetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
+		B7BE4CDE23E5E7210069E141 /* DoubleExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExt.swift; sourceTree = "<group>"; };
+		B7BE4CE023E5E7840069E141 /* LocationExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +185,8 @@
 			isa = PBXGroup;
 			children = (
 				B7BE4CCF23E5A7980069E141 /* AlertExt.swift */,
+				B7BE4CDE23E5E7210069E141 /* DoubleExt.swift */,
+				B7BE4CE023E5E7840069E141 /* LocationExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -298,6 +304,7 @@
 				B788982A23E4D4A20045D01D /* FavoritesController.swift in Sources */,
 				B78897E623E47D550045D01D /* WeatherAPIClient.swift in Sources */,
 				B7BE4CCE23E4E1240069E141 /* ForcastCell.swift in Sources */,
+				B7BE4CDF23E5E7210069E141 /* DoubleExt.swift in Sources */,
 				548CE066234D33E600B5177D /* ZipCodeHelper.swift in Sources */,
 				B78897E023E47BA80045D01D /* Secrets.swift in Sources */,
 				B7BE4CD023E5A7980069E141 /* AlertExt.swift in Sources */,
@@ -305,6 +312,7 @@
 				548CE052234D33B500B5177D /* AppDelegate.swift in Sources */,
 				B788982D23E4DA880045D01D /* ForcastView.swift in Sources */,
 				548CE054234D33B500B5177D /* SceneDelegate.swift in Sources */,
+				B7BE4CE123E5E7840069E141 /* LocationExt.swift in Sources */,
 				B7BE4CDD23E5CCC10069E141 /* DetailController.swift in Sources */,
 				B788981323E4C0220045D01D /* Weather.swift in Sources */,
 			);
