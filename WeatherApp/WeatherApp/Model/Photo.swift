@@ -13,7 +13,7 @@ struct PhotoSearch:Codable {
     let hits: [Photo]
 }
 
-struct Photo: Codable {
+struct Photo: Codable & Equatable{
     let largeImageURL: String
     let id: Int
     let user: String

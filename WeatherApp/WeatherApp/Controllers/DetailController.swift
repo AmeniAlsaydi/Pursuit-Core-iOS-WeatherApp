@@ -8,6 +8,7 @@
 
 import UIKit
 import ImageKit
+import DataPersistence
 
 class DetailController: UIViewController {
     
@@ -26,6 +27,8 @@ class DetailController: UIViewController {
     public var photo: Photo?
     public var weather: DailyForecast?
     public var cityName: String?
+    
+    public let dataPersistance = DataPersistence<Photo>(filename: "favPhotos.plist")
     
     override func viewDidLayoutSubviews() {
         cityImageView.layer.cornerRadius = cityImageView.frame.width/2
@@ -73,7 +76,27 @@ class DetailController: UIViewController {
                 }
             }
         }
+    }
+    
+    @IBAction func imageFavorited(_ sender: UIButton) {
+
+        sender.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        
+        let url = FileManager.getPath(with: "favPhotos.plist", for: .documentsDirectory)
+              print(url)
+        
+        guard let photo = photo else {
+            return
+        }
+        
+        do {
+            try dataPersistance.createItem(photo)
+        } catch {
+            
+            showAlert(title: "error saving photo", message: "\(error)")
+        }
         
     }
+    
 
 }

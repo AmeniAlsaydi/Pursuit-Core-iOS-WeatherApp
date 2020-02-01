@@ -29,7 +29,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zoc-Ft-ufu">
-                                <rect key="frame" x="20" y="44" width="374" height="29"/>
+                                <rect key="frame" x="20" y="44" width="350" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="350" id="wS4-X5-w3l"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -148,6 +151,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VzZ-eK-tt9">
+                                <rect key="frame" x="378" y="44" width="22" height="22"/>
+                                <state key="normal" image="star" catalog="system"/>
+                                <connections>
+                                    <action selector="imageFavorited:" destination="29U-Es-EHp" eventType="touchUpInside" id="fn8-fC-LO7"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -157,6 +167,7 @@
                             <constraint firstItem="ssC-TL-X1L" firstAttribute="trailing" secondItem="egc-Ps-9iP" secondAttribute="trailing" constant="30" id="AD4-pp-vhH"/>
                             <constraint firstItem="ohf-4G-n73" firstAttribute="leading" secondItem="ssC-TL-X1L" secondAttribute="leading" constant="35" id="As7-OJ-x1u"/>
                             <constraint firstItem="67y-io-PLy" firstAttribute="leading" secondItem="ssC-TL-X1L" secondAttribute="leading" constant="20" id="BKH-zn-7hc"/>
+                            <constraint firstItem="VzZ-eK-tt9" firstAttribute="top" secondItem="ssC-TL-X1L" secondAttribute="top" id="EWG-81-zzh"/>
                             <constraint firstItem="UDY-cs-djd" firstAttribute="leading" secondItem="ssC-TL-X1L" secondAttribute="leading" constant="20" id="Fxt-sx-q0b"/>
                             <constraint firstItem="zoc-Ft-ufu" firstAttribute="leading" secondItem="ssC-TL-X1L" secondAttribute="leading" constant="20" id="IXk-s8-FvZ"/>
                             <constraint firstItem="Ku7-nv-4q0" firstAttribute="top" secondItem="xN2-J9-xva" secondAttribute="bottom" constant="10" id="Iig-sx-Lzh"/>
@@ -170,7 +181,6 @@
                             <constraint firstItem="ssC-TL-X1L" firstAttribute="trailing" secondItem="BMm-r9-NMZ" secondAttribute="trailing" id="R9c-oy-hb6"/>
                             <constraint firstItem="H9K-yN-IjV" firstAttribute="top" secondItem="LDe-CN-5EZ" secondAttribute="bottom" constant="20" id="U0e-Px-z2V"/>
                             <constraint firstItem="Lt2-NK-IMz" firstAttribute="top" secondItem="8uU-Lc-bfh" secondAttribute="bottom" constant="10" id="U0s-De-hIZ"/>
-                            <constraint firstItem="ssC-TL-X1L" firstAttribute="trailing" secondItem="zoc-Ft-ufu" secondAttribute="trailing" constant="20" id="Uuc-cw-tRN"/>
                             <constraint firstItem="ssC-TL-X1L" firstAttribute="trailing" secondItem="sJ4-5s-fKY" secondAttribute="trailing" id="W2D-vU-5kN"/>
                             <constraint firstItem="BMm-r9-NMZ" firstAttribute="top" secondItem="Lt2-NK-IMz" secondAttribute="bottom" constant="20" id="WUI-KE-Rzq"/>
                             <constraint firstItem="Ku7-nv-4q0" firstAttribute="leading" secondItem="ssC-TL-X1L" secondAttribute="leading" constant="35" id="XdU-uX-YmU"/>
@@ -179,6 +189,7 @@
                             <constraint firstItem="ssC-TL-X1L" firstAttribute="trailing" secondItem="wx5-lN-2i1" secondAttribute="trailing" constant="30" id="iLd-r3-WoE"/>
                             <constraint firstItem="egc-Ps-9iP" firstAttribute="top" secondItem="sJ4-5s-fKY" secondAttribute="bottom" constant="10" id="itn-uM-QZ5"/>
                             <constraint firstItem="Kdq-6e-OJb" firstAttribute="leading" secondItem="ssC-TL-X1L" secondAttribute="leading" constant="35" id="jQE-nq-w2r"/>
+                            <constraint firstItem="VzZ-eK-tt9" firstAttribute="leading" secondItem="zoc-Ft-ufu" secondAttribute="trailing" constant="8" id="nSo-8S-MOu"/>
                             <constraint firstItem="H9K-yN-IjV" firstAttribute="leading" secondItem="ssC-TL-X1L" secondAttribute="leading" constant="20" id="qUO-ra-rYJ"/>
                             <constraint firstItem="LDe-CN-5EZ" firstAttribute="top" secondItem="RBJ-g8-9IO" secondAttribute="bottom" constant="30" id="w48-0C-PTk"/>
                             <constraint firstItem="wx5-lN-2i1" firstAttribute="top" secondItem="BMm-r9-NMZ" secondAttribute="bottom" constant="10" id="wWC-wD-Y6U"/>
@@ -207,4 +218,7 @@
             <point key="canvasLocation" x="57.971014492753625" y="67.633928571428569"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="star" catalog="system" width="64" height="58"/>
+    </resources>
 </document>
