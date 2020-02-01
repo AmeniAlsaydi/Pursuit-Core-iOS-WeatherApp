@@ -22,6 +22,7 @@
 		B788982A23E4D4A20045D01D /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B788982923E4D4A20045D01D /* FavoritesController.swift */; };
 		B788982D23E4DA880045D01D /* ForcastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B788982C23E4DA880045D01D /* ForcastView.swift */; };
 		B7BE4CCE23E4E1240069E141 /* ForcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE4CCD23E4E1240069E141 /* ForcastCell.swift */; };
+		B7BE4CD023E5A7980069E141 /* AlertExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE4CCF23E5A7980069E141 /* AlertExt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		B788982923E4D4A20045D01D /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
 		B788982C23E4DA880045D01D /* ForcastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForcastView.swift; sourceTree = "<group>"; };
 		B7BE4CCD23E4E1240069E141 /* ForcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForcastCell.swift; sourceTree = "<group>"; };
+		B7BE4CCF23E5A7980069E141 /* AlertExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 		548CE050234D33B500B5177D /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				B7BE4CD123E5A7AA0069E141 /* Extensions */,
 				B788982B23E4D9910045D01D /* View */,
 				B788982623E4D2530045D01D /* Controllers */,
 				B78897E123E47CEE0045D01D /* Networks */,
@@ -160,6 +163,14 @@
 				B7BE4CCD23E4E1240069E141 /* ForcastCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		B7BE4CD123E5A7AA0069E141 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B7BE4CCF23E5A7980069E141 /* AlertExt.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,6 +286,7 @@
 				B7BE4CCE23E4E1240069E141 /* ForcastCell.swift in Sources */,
 				548CE066234D33E600B5177D /* ZipCodeHelper.swift in Sources */,
 				B78897E023E47BA80045D01D /* Secrets.swift in Sources */,
+				B7BE4CD023E5A7980069E141 /* AlertExt.swift in Sources */,
 				548CE052234D33B500B5177D /* AppDelegate.swift in Sources */,
 				B788982D23E4DA880045D01D /* ForcastView.swift in Sources */,
 				548CE054234D33B500B5177D /* SceneDelegate.swift in Sources */,

@@ -10,7 +10,8 @@ import Foundation
 
 
 struct SecretsKey {
-    static let key = "993636215e910eb8feec1499a08963a6"
+    static let weatherApiKey = "993636215e910eb8feec1499a08963a6"
+    static let pixabayApiKey = ""
 }
 
 

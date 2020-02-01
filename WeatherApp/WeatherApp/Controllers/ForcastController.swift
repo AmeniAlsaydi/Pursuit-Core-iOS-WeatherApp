@@ -22,9 +22,9 @@ class ForcastController: UIViewController {
     }
     
     
-    private var zipCode = "11201" {
+    private var zipCode = "11201" { // populate this from user defaults else "11201" want to get fancy add current location?
         didSet {
-            // reload the collection view to display new city's weather
+            getCityWeather(zipCode: zipCode)
         }
     }
     
@@ -39,11 +39,12 @@ class ForcastController: UIViewController {
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Todays Weather"
-        
         view.backgroundColor = .white
+        
         forcastView.collectionView.register(ForcastCell.self, forCellWithReuseIdentifier: "forcastCell")
         forcastView.collectionView.dataSource = self
         forcastView.collectionView.delegate = self
+        forcastView.zipCodeTextFeild.delegate = self 
     }
     
     private func getCityWeather(zipCode: String) {
@@ -53,9 +54,11 @@ class ForcastController: UIViewController {
             case .success(let location):
                 let lat = location.lat
                 let long = location.long
-                   // use cordinates to get weather
+                // use cordinates to get weather
                 self?.getWeather(lat: lat, long: long)
             case .failure(let error):
+                self?.showAlert(title: "Check Zipcode", message: "Hmm... we cant seem to find that zipcode, please try again")
+                self?.forcastView.zipCodeTextFeild.text = ""
                 print(error)
             }
         }
@@ -68,59 +71,76 @@ class ForcastController: UIViewController {
                 print(appError)
             case .success(let weather):
                 self?.weeksForcast = weather.daily.data
+               // print(weather.timezone) // repeatedly returns America/New_York no matter the zipcode ?
+                
+                let location = CLLocation(latitude: lat, longitude: long)
+                location.fetchCityAndCountry { city, country, error in
+                    guard let city = city, let country = country, error == nil else { return }
+                    
+                    DispatchQueue.main.async {
+                        self?.forcastView.cityLabel.text = city + ", " + country
+                    }
+                }
             }
         }
     }
-    
 }
 
 
 extension ForcastController: UICollectionViewDataSource {
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return weeksForcast.count
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    // without downcasting to podcast cell, we wont have access propterties of the cell
-    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "forcastCell", for: indexPath) as? ForcastCell else {
-        fatalError("could not downcast podcast cell")
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return weeksForcast.count
     }
     
-    let weather = weeksForcast[indexPath.row]
-    cell.configureCell(dayWeather: weather)
-    
-    cell.backgroundColor = .white
-    return cell
-  }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // without downcasting to podcast cell, we wont have access propterties of the cell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "forcastCell", for: indexPath) as? ForcastCell else {
+            fatalError("could not downcast podcast cell")
+        }
+        
+        let weather = weeksForcast[indexPath.row]
+        cell.configureCell(dayWeather: weather)
+        
+        cell.backgroundColor = .white
+        return cell
+    }
 }
 
 extension ForcastController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-           // expecting a cg size which is a tuple of two values
-           
-           let interItemSpacing: CGFloat = 10 // space betweem items
-           let maxWidth = UIScreen.main.bounds.size.width // device width
-           
-           let numberOfItems: CGFloat = 2 // items
-           let totalSpacing: CGFloat = numberOfItems * interItemSpacing
-           
-           let itemWidth: CGFloat = (maxWidth - totalSpacing)/numberOfItems
-           
-           return CGSize(width: itemWidth, height: itemWidth * 1.2)
-       }
-       
-       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-           // padding sround collectionview
-           return UIEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
-       }
-       
-       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-           
-           return 5
-       }
+        // expecting a cg size which is a tuple of two values
+        
+        let interItemSpacing: CGFloat = 10 // space betweem items
+        let maxWidth = UIScreen.main.bounds.size.width // device width
+        
+        let numberOfItems: CGFloat = 2 // items
+        let totalSpacing: CGFloat = numberOfItems * interItemSpacing
+        
+        let itemWidth: CGFloat = (maxWidth - totalSpacing)/numberOfItems
+        
+        return CGSize(width: itemWidth, height: itemWidth * 1.2)
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        // padding sround collectionview
+        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    }
     
+}
+
+extension ForcastController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        guard let zipcode = textField.text else {
+            getCityWeather(zipCode: zipCode)
+            return true
+        }
+        zipCode = zipcode
+        
+        return true
+    }
 }
 
 
@@ -131,12 +151,4 @@ extension CLLocation {
     }
 }
 
-// to use above extension
 
-/*
-let location = CLLocation(latitude: lat, longitude: long)
-location.fetchCityAndCountry { city, country, error in
-    guard let city = city, let country = country, error == nil else { return }
-    print(city + ", " + country)  // New York, United States
-       }
-*/

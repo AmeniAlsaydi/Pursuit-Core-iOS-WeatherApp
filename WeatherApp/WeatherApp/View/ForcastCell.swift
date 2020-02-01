@@ -18,6 +18,7 @@ class ForcastCell: UICollectionViewCell {
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.text = "Date Goes here"
+        label.font = UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.thin)
         label.textAlignment = .center
         return label
     }()
@@ -31,16 +32,21 @@ class ForcastCell: UICollectionViewCell {
     
     private lazy var lowTemp: UILabel = {
         let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.thin)
         return label
     }()
     
     private lazy var highTemp: UILabel = {
         let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.thin)
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
+        
         commonInit()
     }
     
@@ -52,15 +58,18 @@ class ForcastCell: UICollectionViewCell {
     private func commonInit() {
         setupDateConstaints()
         setupIconConstraints()
+        setuplowLabelConstraints()
+        setuphighLabelConstraints()
         
     }
     
     public func configureCell(dayWeather: DailyForecast) {
         
         imageIcon.image = UIImage(named: dayWeather.icon)
-        
-        
-        
+        dateLabel.text = Double(dayWeather.time).convertTime()
+        highTemp.text = dayWeather.temperatureHigh.description
+        lowTemp.text = dayWeather.temperatureLow.description
+ 
     }
     
     private func setupDateConstaints(){
@@ -81,10 +90,48 @@ class ForcastCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             imageIcon.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 5),
             imageIcon.centerXAnchor.constraint(equalTo: centerXAnchor), // center image 
-            imageIcon.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.4),
+            imageIcon.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
             imageIcon.heightAnchor.constraint(equalTo: imageIcon.widthAnchor) // to make it a square
         ])
     }
     
+    private func setuplowLabelConstraints() {
+        addSubview(highTemp)
+        highTemp.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            highTemp.topAnchor.constraint(equalTo: imageIcon.bottomAnchor, constant: 5),
+            highTemp.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            highTemp.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 5)
+            
+        ])
+        
+    }
+    
+    private func setuphighLabelConstraints() {
+        addSubview(lowTemp)
+        lowTemp.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            lowTemp.topAnchor.constraint(equalTo: highTemp.bottomAnchor, constant: 5),
+            lowTemp.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            lowTemp.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 5)
+            
+        ])
+        
+    }
+    
+}
+
+
+extension Double {
+    func convertTime() -> String {
+        let date = Date(timeIntervalSince1970: self)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM"
+        dateFormatter.timeZone = .current
+        let localDate = dateFormatter.string(from: date)
+        return localDate
+    }
     
 }
