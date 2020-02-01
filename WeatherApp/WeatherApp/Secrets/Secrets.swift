@@ -11,7 +11,7 @@ import Foundation
 
 struct SecretsKey {
     static let weatherApiKey = "993636215e910eb8feec1499a08963a6"
-    static let pixabayApiKey = ""
+    static let pixabayApiKey = "14975740-2f12ead908359190bb79f36dc"
 }
 
 

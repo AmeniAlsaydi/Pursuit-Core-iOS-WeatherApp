@@ -23,6 +23,9 @@
 		B788982D23E4DA880045D01D /* ForcastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B788982C23E4DA880045D01D /* ForcastView.swift */; };
 		B7BE4CCE23E4E1240069E141 /* ForcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE4CCD23E4E1240069E141 /* ForcastCell.swift */; };
 		B7BE4CD023E5A7980069E141 /* AlertExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE4CCF23E5A7980069E141 /* AlertExt.swift */; };
+		B7BE4CD323E5B0740069E141 /* PhotosApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE4CD223E5B0740069E141 /* PhotosApiClient.swift */; };
+		B7BE4CD523E5B1520069E141 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE4CD423E5B1520069E141 /* Photo.swift */; };
+		B7BE4CD923E5C2C60069E141 /* imageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE4CD823E5C2C60069E141 /* imageExt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,9 @@
 		B788982C23E4DA880045D01D /* ForcastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForcastView.swift; sourceTree = "<group>"; };
 		B7BE4CCD23E4E1240069E141 /* ForcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForcastCell.swift; sourceTree = "<group>"; };
 		B7BE4CCF23E5A7980069E141 /* AlertExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExt.swift; sourceTree = "<group>"; };
+		B7BE4CD223E5B0740069E141 /* PhotosApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosApiClient.swift; sourceTree = "<group>"; };
+		B7BE4CD423E5B1520069E141 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		B7BE4CD823E5C2C60069E141 /* imageExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				B78897E523E47D550045D01D /* WeatherAPIClient.swift */,
+				B7BE4CD223E5B0740069E141 /* PhotosApiClient.swift */,
 			);
 			path = Networks;
 			sourceTree = "<group>";
@@ -133,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				B788981223E4C0220045D01D /* Weather.swift */,
+				B7BE4CD423E5B1520069E141 /* Photo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -169,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				B7BE4CCF23E5A7980069E141 /* AlertExt.swift */,
+				B7BE4CD823E5C2C60069E141 /* imageExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -279,6 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7BE4CD523E5B1520069E141 /* Photo.swift in Sources */,
 				B788982523E4D1E90045D01D /* WeatherTabController.swift in Sources */,
 				B788982323E4D0DB0045D01D /* ForcastController.swift in Sources */,
 				B788982A23E4D4A20045D01D /* FavoritesController.swift in Sources */,
@@ -287,7 +297,9 @@
 				548CE066234D33E600B5177D /* ZipCodeHelper.swift in Sources */,
 				B78897E023E47BA80045D01D /* Secrets.swift in Sources */,
 				B7BE4CD023E5A7980069E141 /* AlertExt.swift in Sources */,
+				B7BE4CD323E5B0740069E141 /* PhotosApiClient.swift in Sources */,
 				548CE052234D33B500B5177D /* AppDelegate.swift in Sources */,
+				B7BE4CD923E5C2C60069E141 /* imageExt.swift in Sources */,
 				B788982D23E4DA880045D01D /* ForcastView.swift in Sources */,
 				548CE054234D33B500B5177D /* SceneDelegate.swift in Sources */,
 				B788981323E4C0220045D01D /* Weather.swift in Sources */,

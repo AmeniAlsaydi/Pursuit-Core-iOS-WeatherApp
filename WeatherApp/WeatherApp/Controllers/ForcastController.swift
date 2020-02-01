@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+//import ImageKit
 
 class ForcastController: UIViewController {
     
@@ -71,7 +72,7 @@ class ForcastController: UIViewController {
                 print(appError)
             case .success(let weather):
                 self?.weeksForcast = weather.daily.data
-               // print(weather.timezone) // repeatedly returns America/New_York no matter the zipcode ?
+                // print(weather.timezone) // repeatedly returns America/New_York no matter the zipcode ?
                 
                 let location = CLLocation(latitude: lat, longitude: long)
                 location.fetchCityAndCountry { city, country, error in
@@ -80,10 +81,44 @@ class ForcastController: UIViewController {
                     DispatchQueue.main.async {
                         self?.forcastView.cityLabel.text = city + ", " + country
                     }
+                    self?.loadCityPhoto(city: city)
+                    
+                    
                 }
             }
         }
     }
+    
+    private func loadCityPhoto(city: String) {
+        PhotoApiClient.getPhotos(searchQuery: city) { [weak self] (result) in
+            switch result {
+            case .failure(let appError):
+                print("api client error: \(appError)")
+            case .success(let photos):
+                
+                guard photos.count != 0 else {
+                    return
+                }
+                let imageURL = photos[0].largeImageURL
+                
+                self?.forcastView.cityImage.getImage(with: imageURL, completion: { (result) in
+                    switch result {
+                    case .failure:
+                        DispatchQueue.main.async {
+                            // present default
+                            self?.forcastView.cityImage.image = UIImage(systemName: "sun.dust")
+                        }
+                    case .success(let image):
+                        DispatchQueue.main.async {
+                            // present city image
+                            self?.forcastView.cityImage.image = image
+                        }
+                    }
+                })
+            }
+        }
+    }
+    
 }
 
 
