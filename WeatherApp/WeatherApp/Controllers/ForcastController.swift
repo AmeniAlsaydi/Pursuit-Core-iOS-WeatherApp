@@ -14,6 +14,8 @@ class ForcastController: UIViewController {
     
     private var forcastView = ForcastView()
     
+    public var cityPhotos = [Photo]()
+    
     private var weeksForcast = [DailyForecast]() {
         didSet {
             DispatchQueue.main.async {
@@ -81,7 +83,7 @@ class ForcastController: UIViewController {
                     DispatchQueue.main.async {
                         self?.forcastView.cityLabel.text = city + ", " + country
                     }
-                    self?.loadCityPhoto(city: city)
+                    self?.getCityPhotos(city: city)
                     
                     
                 }
@@ -89,32 +91,13 @@ class ForcastController: UIViewController {
         }
     }
     
-    private func loadCityPhoto(city: String) {
+    private func getCityPhotos(city: String) {
         PhotoApiClient.getPhotos(searchQuery: city) { [weak self] (result) in
             switch result {
             case .failure(let appError):
                 print("api client error: \(appError)")
             case .success(let photos):
-                
-                guard photos.count != 0 else {
-                    return
-                }
-                let imageURL = photos[0].largeImageURL
-                
-                self?.forcastView.cityImage.getImage(with: imageURL, completion: { (result) in
-                    switch result {
-                    case .failure:
-                        DispatchQueue.main.async {
-                            // present default
-                            self?.forcastView.cityImage.image = UIImage(systemName: "sun.dust")
-                        }
-                    case .success(let image):
-                        DispatchQueue.main.async {
-                            // present city image
-                            self?.forcastView.cityImage.image = image
-                        }
-                    }
-                })
+                self?.cityPhotos = photos
             }
         }
     }
@@ -160,6 +143,21 @@ extension ForcastController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         // padding sround collectionview
         return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // create a detail vc instance then pass into the weeksForcast[indexPath.row]
+        // as well pass cityPhotos[indexPath.row] so that you can have a diff photo everytime
+        
+        // get instance of storyboard
+        
+        let detailStoryBoard = UIStoryboard(name: "WeatherDetail", bundle: nil) // name of the story board file
+        
+        guard let detailVC = detailStoryBoard.instantiateViewController(identifier: "DetailController") as? DetailController else {
+            fatalError("could not downcast to DetailController")
+        }
+        
+        navigationController?.pushViewController(detailVC, animated: true)
     }
     
 }

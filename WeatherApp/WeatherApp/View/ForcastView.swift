@@ -10,6 +10,10 @@ import UIKit
 
 class ForcastView: UIView {
     
+    override func layoutSubviews() {
+        cityImage.layer.cornerRadius = cityImage.frame.width/2
+    }
+    
     public lazy var collectionView: UICollectionView = {
         // lazy, we want to instantiate it when its called
         
@@ -40,6 +44,7 @@ class ForcastView: UIView {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
+       
         image.image = UIImage(systemName: "cloud.sun")
         return image
     }()
@@ -110,7 +115,7 @@ class ForcastView: UIView {
             cityImage.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20),
             //cityImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             //cityImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            cityImage.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.60),
+            cityImage.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.75),
             cityImage.heightAnchor.constraint(equalTo: cityImage.widthAnchor),
             cityImage.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
