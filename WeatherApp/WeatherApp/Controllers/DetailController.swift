@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ImageKit
 
 class DetailController: UIViewController {
     
@@ -27,7 +28,23 @@ class DetailController: UIViewController {
     
     private func updateUI() {
         
+        guard let weather = weather, let photo = photo else {
+            fatalError("couldnt get weather or photo from other VC check segue")
+        }
         
+        highTempLabel.text = weather.temperatureHigh.description
+        
+        cityImageView.getImage(with: photo.largeImageURL) { [weak self] (result) in
+            switch result {
+            case .failure(let appError):
+                // show default
+                print(appError)
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self?.cityImageView.image = image
+                }
+            }
+        }
         
     }
 

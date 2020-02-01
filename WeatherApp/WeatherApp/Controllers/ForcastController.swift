@@ -146,9 +146,7 @@ extension ForcastController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // create a detail vc instance then pass into the weeksForcast[indexPath.row]
-        // as well pass cityPhotos[indexPath.row] so that you can have a diff photo everytime
-        
+     
         // get instance of storyboard
         
         let detailStoryBoard = UIStoryboard(name: "WeatherDetail", bundle: nil) // name of the story board file
@@ -156,6 +154,9 @@ extension ForcastController: UICollectionViewDelegateFlowLayout {
         guard let detailVC = detailStoryBoard.instantiateViewController(identifier: "DetailController") as? DetailController else {
             fatalError("could not downcast to DetailController")
         }
+        
+        detailVC.weather = weeksForcast[indexPath.row]
+        detailVC.photo = cityPhotos[indexPath.row]
         
         navigationController?.pushViewController(detailVC, animated: true)
     }
