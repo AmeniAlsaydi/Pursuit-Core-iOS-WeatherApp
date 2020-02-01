@@ -11,46 +11,118 @@ import MapKit
 
 class ForcastController: UIViewController {
     
+    private var forcastView = ForcastView()
+    
+    private var weeksForcast = [DailyForecast]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.forcastView.collectionView.reloadData()
+            }
+        }
+    }
+    
+    
     private var zipCode = "11201" {
         didSet {
             // reload the collection view to display new city's weather
         }
     }
+    
+    override func loadView() {
+        view = forcastView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .blue
-
+        getCityWeather(zipCode: zipCode)
         
-        // getCity(zipCode: zipCode)
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "Todays Weather"
         
+        view.backgroundColor = .white
+        forcastView.collectionView.register(ForcastCell.self, forCellWithReuseIdentifier: "forcastCell")
+        forcastView.collectionView.dataSource = self
+        forcastView.collectionView.delegate = self
     }
     
-    private func getCity(zipCode: String) {
+    private func getCityWeather(zipCode: String) {
         
-        ZipCodeHelper.getLatLong(fromZipCode: zipCode) { (results) in
+        ZipCodeHelper.getLatLong(fromZipCode: zipCode) {  [weak self] (results) in
             switch results {
             case .success(let location):
                 let lat = location.lat
                 let long = location.long
-                
-                // use cordinates to get city
-                let location = CLLocation(latitude: lat, longitude: long)
-                location.fetchCityAndCountry { city, country, error in
-                    guard let city = city, let country = country, error == nil else { return }
-                    print(city + ", " + country)  // New York, United States
-                       }
-              
+                   // use cordinates to get weather
+                self?.getWeather(lat: lat, long: long)
             case .failure(let error):
                 print(error)
             }
         }
-
-
     }
-
-  
+    
+    private func getWeather(lat: Double, long: Double) {
+        WeatherAPIClient.getWeatherInfo(lat: lat, long: long) { [weak self] (result) in
+            switch result {
+            case .failure(let appError):
+                print(appError)
+            case .success(let weather):
+                self?.weeksForcast = weather.daily.data
+            }
+        }
+    }
+    
 }
+
+
+extension ForcastController: UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return weeksForcast.count
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    // without downcasting to podcast cell, we wont have access propterties of the cell
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "forcastCell", for: indexPath) as? ForcastCell else {
+        fatalError("could not downcast podcast cell")
+    }
+    
+    let weather = weeksForcast[indexPath.row]
+    cell.configureCell(dayWeather: weather)
+    
+    cell.backgroundColor = .white
+    return cell
+  }
+}
+
+extension ForcastController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+           // expecting a cg size which is a tuple of two values
+           
+           let interItemSpacing: CGFloat = 10 // space betweem items
+           let maxWidth = UIScreen.main.bounds.size.width // device width
+           
+           let numberOfItems: CGFloat = 2 // items
+           let totalSpacing: CGFloat = numberOfItems * interItemSpacing
+           
+           let itemWidth: CGFloat = (maxWidth - totalSpacing)/numberOfItems
+           
+           return CGSize(width: itemWidth, height: itemWidth * 1.2)
+       }
+       
+       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+           // padding sround collectionview
+           return UIEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
+       }
+       
+       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+           
+           return 5
+       }
+    
+    
+}
+
 
 
 extension CLLocation {
@@ -58,3 +130,13 @@ extension CLLocation {
         CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first?.locality, $0?.first?.country, $1) }
     }
 }
+
+// to use above extension
+
+/*
+let location = CLLocation(latitude: lat, longitude: long)
+location.fetchCityAndCountry { city, country, error in
+    guard let city = city, let country = country, error == nil else { return }
+    print(city + ", " + country)  // New York, United States
+       }
+*/
