@@ -66,7 +66,7 @@ class ForcastCell: UICollectionViewCell {
     public func configureCell(dayWeather: DailyForecast) {
         
         imageIcon.image = UIImage(named: dayWeather.icon)
-        dateLabel.text = Double(dayWeather.time).convertTime()
+        dateLabel.text = Double(dayWeather.time).convertToDate(dateFormat: "MM/dd")
         highTemp.text = dayWeather.temperatureHigh.description
         lowTemp.text = dayWeather.temperatureLow.description
  
@@ -125,10 +125,20 @@ class ForcastCell: UICollectionViewCell {
 
 
 extension Double {
+    func convertToDate(dateFormat: String) -> String {
+        let date = Date(timeIntervalSince1970: self)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        dateFormatter.timeZone = .current
+        let localDate = dateFormatter.string(from: date)
+        return localDate
+    }
+    
     func convertTime() -> String {
         let date = Date(timeIntervalSince1970: self)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM"
+        dateFormatter.timeStyle = DateFormatter.Style.medium
+        dateFormatter.dateFormat = "h:mm a"
         dateFormatter.timeZone = .current
         let localDate = dateFormatter.string(from: date)
         return localDate

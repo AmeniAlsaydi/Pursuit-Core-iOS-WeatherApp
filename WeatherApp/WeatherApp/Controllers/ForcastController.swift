@@ -13,8 +13,8 @@ import MapKit
 class ForcastController: UIViewController {
     
     private var forcastView = ForcastView()
-    
     public var cityPhotos = [Photo]()
+    public var cityName = ""
     
     private var weeksForcast = [DailyForecast]() {
         didSet {
@@ -79,6 +79,8 @@ class ForcastController: UIViewController {
                 let location = CLLocation(latitude: lat, longitude: long)
                 location.fetchCityAndCountry { city, country, error in
                     guard let city = city, let country = country, error == nil else { return }
+                    
+                    self?.cityName = city
                     
                     DispatchQueue.main.async {
                         self?.forcastView.cityLabel.text = city + ", " + country
@@ -157,6 +159,7 @@ extension ForcastController: UICollectionViewDelegateFlowLayout {
         
         detailVC.weather = weeksForcast[indexPath.row]
         detailVC.photo = cityPhotos[indexPath.row]
+        detailVC.cityName = cityName 
         
         navigationController?.pushViewController(detailVC, animated: true)
     }
