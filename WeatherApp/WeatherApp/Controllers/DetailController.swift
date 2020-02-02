@@ -28,8 +28,8 @@ class DetailController: UIViewController {
     public var photo: Photo?
     public var weather: DailyForecast?
     public var cityName: String?
-    
     public let dataPersistance = DataPersistence<Photo>(filename: "favPhotos.plist")
+    
     
     override func viewDidLayoutSubviews() {
         cityImageView.layer.cornerRadius = cityImageView.frame.width/2
@@ -45,8 +45,19 @@ class DetailController: UIViewController {
     private func checkPhoto() {
         
         // if nil disable button
-        if photo == nil {
+        guard let photo = photo else {
             favoriteButton.isEnabled = false
+            return
+        }
+        
+        do {
+            let favs = try dataPersistance.loadItems()
+            if favs.contains(photo) {
+                favoriteButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+                favoriteButton.isEnabled = false 
+            }
+        } catch {
+            print("error geting favs on detail vc")
         }
         
         // check if its already been faved, fill and disable button
