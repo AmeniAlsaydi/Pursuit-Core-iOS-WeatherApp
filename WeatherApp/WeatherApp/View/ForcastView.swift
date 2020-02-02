@@ -10,10 +10,6 @@ import UIKit
 
 class ForcastView: UIView {
     
-//    override func layoutSubviews() {
-//        cityImage.layer.cornerRadius = cityImage.frame.width/2
-//    }
-    
     public lazy var collectionView: UICollectionView = {
         // lazy, we want to instantiate it when its called
         
