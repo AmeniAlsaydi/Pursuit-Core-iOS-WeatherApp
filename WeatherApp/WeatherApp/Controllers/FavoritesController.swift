@@ -16,7 +16,9 @@ class FavoritesController: UIViewController {
 
     private var favorites = [Photo]() {
         didSet {
-            // reload collection view
+            DispatchQueue.main.async {
+                self.favView.collectionView.reloadData()
+            }
         }
     }
     
@@ -34,34 +36,61 @@ class FavoritesController: UIViewController {
         view.backgroundColor = .white
         favView.collectionView.dataSource = self
         favView.collectionView.register(FavoriteCell.self, forCellWithReuseIdentifier: "favCell")
-        // favView.collectionView.delegate = self
+        favView.collectionView.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         loadfavorties()
     }
     
     
-    func loadfavorties() {
+    private func loadfavorties() {
         do {
             favorites = try dataPersistance.loadItems()
             //print(favorites.count)
         } catch {
             print("error retreiving photos: \(error)")
         }
-        
     }
 }
 
 extension FavoritesController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return favorites.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = favView.collectionView.dequeueReusableCell(withReuseIdentifier: "favCell", for: indexPath) as? FavoriteCell else {
             fatalError("could not downcast fav cell")
         }
-        cell.backgroundColor = .blue
+        let favPic = favorites[indexPath.row]
+        cell.configureCell(photo: favPic)
         return cell
     }
     
     
+}
+
+extension FavoritesController: UICollectionViewDelegateFlowLayout {
+
+func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    // expecting a cg size which is a tuple of two values
+    
+    let interItemSpacing: CGFloat = 10 // space betweem items
+    let maxWidth = UIScreen.main.bounds.size.width // device width
+    
+    let numberOfItems: CGFloat = 2 // items
+    let totalSpacing: CGFloat = numberOfItems * interItemSpacing
+    
+    let itemWidth: CGFloat = (maxWidth - totalSpacing)/numberOfItems
+    
+    return CGSize(width: itemWidth, height: itemWidth * 1.2)
+}
+
+func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    // padding sround collectionview
+    return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+
+}
+
 }

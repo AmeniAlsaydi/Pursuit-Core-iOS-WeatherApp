@@ -204,6 +204,7 @@
                         <outlet property="cityImageView" destination="LDe-CN-5EZ" id="Rgf-OK-ent"/>
                         <outlet property="citynameLabel" destination="zoc-Ft-ufu" id="rfO-Tw-0aH"/>
                         <outlet property="dateLabel" destination="RBJ-g8-9IO" id="2k9-b9-k8V"/>
+                        <outlet property="favoriteButton" destination="VzZ-eK-tt9" id="7N9-tF-nzz"/>
                         <outlet property="highTempLabel" destination="ohf-4G-n73" id="C13-Xe-nt9"/>
                         <outlet property="lowTempLabel" destination="Lt2-NK-IMz" id="DQX-NR-ena"/>
                         <outlet property="rainLabel" destination="egc-Ps-9iP" id="l4o-QI-8fJ"/>

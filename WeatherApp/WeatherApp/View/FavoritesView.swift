@@ -16,7 +16,7 @@ class FavoritesView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout) // like creating an empty variable
-        cv.backgroundColor = .blue
+        cv.backgroundColor = .white
         return cv
     }()
     

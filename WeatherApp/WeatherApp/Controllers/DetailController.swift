@@ -23,6 +23,7 @@ class DetailController: UIViewController {
     @IBOutlet weak var rainLabel: UILabel!
     @IBOutlet weak var sunriseLabel: UILabel!
     @IBOutlet weak var sunsetLabel: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
     
     public var photo: Photo?
     public var weather: DailyForecast?
@@ -38,8 +39,14 @@ class DetailController: UIViewController {
         super.viewDidLoad()
 
         updateUI()
+        checkPhoto()
     }
     
+    private func checkPhoto() {
+        if photo == nil {
+            favoriteButton.isEnabled = false
+        }
+    }
     
     private func updateUI() {
         

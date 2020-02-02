@@ -12,13 +12,13 @@ class WeatherTabController: UITabBarController {
     
     private lazy var forcastVC: ForcastController = {
         let vc = ForcastController()
-        vc.tabBarItem = UITabBarItem(title: "Weather", image: UIImage(systemName: "1.circle"), tag: 0)
+        vc.tabBarItem = UITabBarItem(title: "Weather", image: UIImage(systemName: "cloud.sun"), tag: 0)
         return vc
     }()
     
     private lazy var favVC: FavoritesController = {
         let vc = FavoritesController()
-        vc.tabBarItem = UITabBarItem(title: "Favorites", image: UIImage(systemName: "2.circle"), tag: 0)
+        vc.tabBarItem = UITabBarItem(title: "Favorites", image: UIImage(systemName: "star"), tag: 0)
         return vc
     }()
     
