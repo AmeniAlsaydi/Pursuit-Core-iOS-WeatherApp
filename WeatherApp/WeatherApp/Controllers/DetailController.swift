@@ -43,9 +43,13 @@ class DetailController: UIViewController {
     }
     
     private func checkPhoto() {
+        
+        // if nil disable button
         if photo == nil {
             favoriteButton.isEnabled = false
         }
+        
+        // check if its already been faved, fill and disable button
     }
     
     private func updateUI() {
@@ -95,6 +99,8 @@ class DetailController: UIViewController {
         guard let photo = photo else {
             return
         }
+        
+        showAlert(title: "City Image Favorited ⭐️", message: "Find all your favorite city images in your favorites tab!")
         
         do {
             try dataPersistance.createItem(photo)

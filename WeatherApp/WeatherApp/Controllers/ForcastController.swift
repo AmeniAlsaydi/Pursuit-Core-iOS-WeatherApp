@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import DataPersistence
 
 class ForcastController: UIViewController {
     
@@ -26,6 +27,9 @@ class ForcastController: UIViewController {
     
     private var zipCode = "11201" { // populate this from user defaults else "11201" want to get fancy add current location?
         didSet {
+            // save to defaults
+            UserDefaults.standard.set(zipCode, forKey: "zipCode")
+            
             getCityWeather(zipCode: zipCode)
         }
     }
@@ -37,6 +41,11 @@ class ForcastController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        guard let zipCode = UserDefaults.standard.object(forKey: "zipCode") as? String else {
+            return
+        }
+        
+        forcastView.zipCodeTextFeild.text = zipCode
         getCityWeather(zipCode: zipCode)
         
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -103,7 +112,6 @@ class ForcastController: UIViewController {
             }
         }
     }
-    
 }
 
 

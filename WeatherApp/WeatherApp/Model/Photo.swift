@@ -15,11 +15,4 @@ struct PhotoSearch:Codable {
 
 struct Photo: Codable & Equatable{
     let largeImageURL: String
-    let id: Int
-    let user: String
-    let likes: Int
-    let favorites: Int
-    let views: Int
-    let tags: String
-    let downloads: Int
 }
