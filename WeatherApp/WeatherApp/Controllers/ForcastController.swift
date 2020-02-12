@@ -41,10 +41,6 @@ class ForcastController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let zipCode = UserDefaults.standard.object(forKey: "zipCode") as? String else {
-            return
-        }
-        
         forcastView.zipCodeTextFeild.text = zipCode
         getCityWeather(zipCode: zipCode)
         
@@ -58,22 +54,23 @@ class ForcastController: UIViewController {
         forcastView.zipCodeTextFeild.delegate = self 
     }
     
-    private func getCityWeather(zipCode: String) {
-        
-        ZipCodeHelper.getLatLong(fromZipCode: zipCode) {  [weak self] (results) in
-            switch results {
-            case .success(let location):
-                let lat = location.lat
-                let long = location.long
-                // use cordinates to get weather
-                self?.getWeather(lat: lat, long: long)
-            case .failure(let error):
-                self?.showAlert(title: "Check Zipcode", message: "Hmm... we cant seem to find that zipcode, please try again")
-                self?.forcastView.zipCodeTextFeild.text = ""
-                print(error)
+        private func getCityWeather(zipCode: String) {
+            
+            ZipCodeHelper.getLatLong(fromZipCode: zipCode) {  [weak self] (results) in
+                switch results {
+                case .success(let location):
+                    let lat = location.lat
+                    let long = location.long
+                    print(lat + long)
+                    // use cordinates to get weather
+                    self?.getWeather(lat: lat, long: long)
+                case .failure(let error):
+                    self?.showAlert(title: "Check Zipcode", message: "Hmm... we cant seem to find that zipcode, please try again")
+                    self?.forcastView.zipCodeTextFeild.text = ""
+                    print(error)
+                }
             }
         }
-    }
     
     private func getWeather(lat: Double, long: Double) {
         WeatherAPIClient.getWeatherInfo(lat: lat, long: long) { [weak self] (result) in
