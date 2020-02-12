@@ -168,9 +168,9 @@ extension ForcastController: UICollectionViewDelegateFlowLayout {
         }
         
         detailVC.weather = weeksForcast[indexPath.row]
-        detailVC.cityName = cityName 
-        
-        navigationController?.pushViewController(detailVC, animated: true)
+        detailVC.cityName = cityName
+        present(detailVC, animated: true)
+       
     }
 }
 
