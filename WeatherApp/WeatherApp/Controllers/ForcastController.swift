@@ -41,6 +41,8 @@ class ForcastController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        zipCode = UserDefaults.standard.object(forKey: "zipCode") as? String ?? "11201"
+        
         forcastView.zipCodeTextFeild.text = zipCode
         getCityWeather(zipCode: zipCode)
         
